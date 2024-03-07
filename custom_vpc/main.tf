@@ -4,27 +4,27 @@ resource "aws_vpc" "main" {
   instance_tenancy = "default"
 
   tags = {
-    Name = "main"
+    Name = "hangaramit_vpc_${var.env}"
   }
 }
-# Create a public subnet_1
+# Create a public subnet
 resource "aws_subnet" "public_subnet" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.10.0/24"
   availability_zone = "ap-south-1a"
 
   tags = {
-    Name = "public_subnet"
+    Name = "public_subnet_1_${var.env}"
   }
 }
-# Create a public subnet_2
+# Create a private subnet
 resource "aws_subnet" "private_subnet" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.102.0/24"
   availability_zone = "ap-south-1a"
 
   tags = {
-    Name = "public_subnet"
+    Name = "private_subnet_1_${var.env}"
   }
 }
 
@@ -32,6 +32,9 @@ resource "aws_subnet" "private_subnet" {
 resource "aws_nat_gateway" "NAT_1" {
   connectivity_type = "private"
   subnet_id         = aws_subnet.public_subnet.id
+  tags = {
+    Name = "hangaramit_NAT_1_${var.env}"
+  }
 }
 
 # Create a Internet gateway
@@ -39,6 +42,6 @@ resource "aws_internet_gateway" "IGW_1" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "IGW_1"
+    Name = "hangaramit_IGW_1_${var.env}"
   }
 }
