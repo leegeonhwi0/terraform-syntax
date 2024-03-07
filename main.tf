@@ -24,7 +24,7 @@ module "prd_custom_vpc" {
   env    = "prd"
 }
 
-resource "test_instance" "x" {
-  prd_custom_vpc = module.prd_custom_vpc.vpc_id
-  dev_vpc_id     = module.default_custom_vpc.vpc_id
-}
+# resource "test_instance" "x" {
+#   prd_custom_vpc = module.prd_custom_vpc.vpc_id
+#   dev_vpc_id     = module.default_custom_vpc.vpc_id
+# }
