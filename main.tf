@@ -30,7 +30,7 @@ variable "names" {
 }
 
 module "personal_custom_vpc" {
-  for_each = toset(var.names)
+  for_each = toset([for s in var.names : "${s}_test"]) # for_each문 안에 for문을 써서 리소스 for_each의 key값 뒤에 _test를 붙임
   source   = "./custom_vpc"
   env      = "personal_${each.key}"
 }
