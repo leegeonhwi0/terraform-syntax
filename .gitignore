@@ -1,0 +1,43 @@
+# Compiled files 이놈들은 S3 따위에 실시간으로 업로드하는 형태로 사용한다
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+
+# logs
+*.log
+
+# Directories 이놈들은 시작시에 local에 자동으로 생성되는 놈들이라 git에 공유하지 않는다
+.terraform/
+.vagrant/
+
+# SSH Keys Key 파일은 git에 업로드시 provider에서 Keyfile이 비활성화 처리된다
+*.pem
+
+# Backup files
+*.bak
+
+# Ignored Terraform files gitignore파일
+*gitignore*.tf
+
+# Ignore Mac .DS_Store files
+.DS_Store
+
+# Ignored vscode files 프로젝트 내에서 사용할 vscode local 설정시 생성된다
+.vscode/
+
+# Ignore Any Generated JSON Files
+operations/automation-script/apply.json
+operations/automation-script/configversion.json
+operations/automation-script/run.template.json
+operations/automation-script/run.json
+operations/automation-script/variable.template.json
+operations/automation-script/variable.json
+operations/automation-script/workspace.template.json
+operations/automation-script/workspace.json
+operations/sentinel-policies-scripts/create-policy.template.json
+operations/sentinel-policies-scripts/create-policy.json
+operations/variable-scripts/variable.template.json
+operations/variable-scripts/variable.json
+
+# Sentinel runtime directory
+.sentinel
