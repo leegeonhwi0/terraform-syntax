@@ -24,7 +24,13 @@ module "prd_custom_vpc" {
   env    = "prd"
 }
 
-# resource "test_instance" "x" {
-#   prd_custom_vpc = module.prd_custom_vpc.vpc_id
-#   dev_vpc_id     = module.default_custom_vpc.vpc_id
-# }
+variable "names" {
+  type    = list(string)
+  default = ["ㅇㄱㄴ", "이건휘"]
+}
+
+module "personal_custom_vpc" {
+  for_each = toset(var.names)
+  source   = "./custom_vpc"
+  env      = "personal_${each.key}"
+}
