@@ -11,7 +11,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public_subnet" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.10.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = local.az_a
 
   tags = {
     Name = "public_subnet_1_${var.env}"
@@ -21,7 +21,7 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_subnet" "private_subnet" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.102.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = local.az_a
 
   tags = {
     Name = "private_subnet_1_${var.env}"
