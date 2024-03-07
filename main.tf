@@ -12,21 +12,21 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-# 개발환경
-module "default_custom_vpc" {
-  source = "./custom_vpc"
-  env    = "dev"
-}
+# # 개발환경
+# module "default_custom_vpc" {
+#   source = "./custom_vpc"
+#   env    = "dev"
+# }
 
-# 운영환경
-module "prd_custom_vpc" {
-  source = "./custom_vpc"
-  env    = "prd"
-}
+# # 운영환경
+# module "prd_custom_vpc" {
+#   source = "./custom_vpc"
+#   env    = "prd"
+# }
 
 variable "names" {
   type    = list(string)
-  default = ["ㅇㄱㄴ", "이건휘"]
+  default = ["이거니", "이건휘"]
 }
 
 module "personal_custom_vpc" {
