@@ -34,3 +34,22 @@ module "personal_custom_vpc" {
   source   = "./custom_vpc"
   env      = "personal_${each.key}"
 }
+
+resource "aws_s3_bucket" "tf_backend" {
+  bucket = "tf_backend_14_202403081122"
+  tags = {
+    Name = "tf_backend_14"
+  }
+}
+
+resource "aws_s3_bucket_acl" "tf_backend_acl" {
+  bucket = aws_s3_bucket.tf_backend.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "tf_backend_versioning" {
+  bucket = aws_s3_bucket.tf_backend.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
