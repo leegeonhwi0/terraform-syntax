@@ -49,12 +49,12 @@ resource "aws_internet_gateway" "IGW_1" {
   }
 }
 
-# Create a NAT gateway
-resource "aws_nat_gateway" "NAT_1" {
-  count             = var.env == "dev" ? 1 : 0
-  connectivity_type = "public"
-  subnet_id         = aws_subnet.public_subnet[0].id
-  tags = {
-    Name = "hangaramit_NAT_1_${var.env}"
-  }
-}
+# # Create a NAT gateway
+# resource "aws_nat_gateway" "NAT_1" {
+#   count             = var.env == "dev" ? 1 : 0
+#   connectivity_type = "public"
+#   subnet_id         = aws_subnet.public_subnet[0].id
+#   tags = {
+#     Name = "hangaramit_NAT_1_${var.env}"
+#   }
+# }

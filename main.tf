@@ -36,15 +36,26 @@ module "personal_custom_vpc" {
 }
 
 resource "aws_s3_bucket" "tf_backend" {
-  bucket = "tf_backend_14_202403081122"
+  bucket = "tf-backend-14-202403081122"
+  # versioning {                   # deprecated된 문법으로 사용이 가능하긴 하나 권장하지 않음, 자체모듈에서 삭제시 업데이트 필요
+  #   enabled = true
+  # }
   tags = {
     Name = "tf_backend_14"
   }
 }
 
+
 resource "aws_s3_bucket_acl" "tf_backend_acl" {
   bucket = aws_s3_bucket.tf_backend.id
   acl    = "private"
+}
+
+resource "aws_s3_bucket_ownership_controls" "tf_backend_ownership" {
+  bucket = aws_s3_bucket.tf_backend.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
 }
 
 resource "aws_s3_bucket_versioning" "tf_backend_versioning" {
