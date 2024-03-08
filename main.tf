@@ -80,3 +80,9 @@ resource "aws_s3_bucket_versioning" "tf_backend_versioning" {
     status = "Enabled"
   }
 }
+
+resource "aws_eip" "eip_test" {
+  tags = {
+    Name = "Test"
+  }
+}
