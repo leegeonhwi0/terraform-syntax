@@ -5,6 +5,9 @@ terraform {
       version = "5.39.1"
     }
   }
+  backend "s3" {
+    bucket = "tf-backend-14-202403081122"
+  }
 }
 
 # Configure the AWS Provider
