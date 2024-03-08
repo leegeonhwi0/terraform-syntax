@@ -80,8 +80,12 @@ resource "aws_s3_bucket_versioning" "tf_backend_versioning" {
     status = "Enabled"
   }
 }
-
+# 13.200.240.109
+# 13.201.160.186
 resource "aws_eip" "eip_test" {
+  provisioner "local-exec" {
+    command = "echo ${aws_eip.eip_test.public_ip}"
+  }
   tags = {
     Name = "Test"
   }
