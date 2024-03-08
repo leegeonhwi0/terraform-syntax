@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "tf-backend-14-202403081122"
-    key            = "terraform.tfstate"
-    region         = "ap-south-1"
-    dynamodb_table = "terraform-lock" # s3 bucket을 이용한 협업을 위해 설정 
+    bucket = "tf-backend-14-202403081122"
+    key    = "terraform.tfstate"
+    region = "ap-south-1"
+    #    dynamodb_table = "terraform-lock" # s3 bucket을 이용한 협업을 위해 설정 
   }
 }
 # # 기본적인 dynamodb_table 생성 설정
