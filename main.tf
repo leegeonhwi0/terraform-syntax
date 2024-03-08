@@ -45,13 +45,13 @@ variable "envs" {
   default = ["dev", "prd", ""]
 }
 
-module "personal_custom_vpc" {
-  for_each = toset([for s in var.envs : s if s != ""]) # for_each문 안에 for문을 쓰고 리소스 for_each의 key값을 검증해서 공백이 아닌만큼 반복
-  source   = "./custom_vpc"
-  env      = "personal_${each.key}"
+module "main_vpc" {
+  source = "./custom_vpc"
+  env    = terraform.workspace
 }
 
 resource "aws_s3_bucket" "tf_backend" {
+  count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
   bucket = "tf-backend-14-202403081122"
   # versioning {                   # deprecated된 문법으로 사용이 가능하긴 하나 권장하지 않음, 자체모듈에서 삭제시 업데이트 필요
   #   enabled = true
@@ -63,20 +63,49 @@ resource "aws_s3_bucket" "tf_backend" {
 
 
 resource "aws_s3_bucket_acl" "tf_backend_acl" {
-  bucket = aws_s3_bucket.tf_backend.id
+  count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
+  bucket = aws_s3_bucket.tf_backend[0].id
   acl    = "private"
 }
 
 resource "aws_s3_bucket_ownership_controls" "tf_backend_ownership" {
-  bucket = aws_s3_bucket.tf_backend.id
+  count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
+  bucket = aws_s3_bucket.tf_backend[0].id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
 
 resource "aws_s3_bucket_versioning" "tf_backend_versioning" {
-  bucket = aws_s3_bucket.tf_backend.id
+  count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
+  bucket = aws_s3_bucket.tf_backend[0].id
   versioning_configuration {
     status = "Enabled"
   }
 }
+
+# resource "aws_instance" "web-ec2" {
+#   ami           = "ami-03bb6d83c60fc5f7c"
+#   instance_type = "t2.micro"
+#   key_name      = "HAN-14"
+#   tags = {
+#     Name = "my-14-web"
+#   }
+#   connection {
+#     type        = "ssh"
+#     user        = "ubuntu"
+#     private_key = file("HAN-14.pem")
+#     host        = self.public_ip
+#   }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "sudo apt update",
+#       "sudo apt -y install nginx",
+#       "sudo systemctl start nginx"
+#     ]
+#   }
+#   provisioner "local-exec" {
+#     command = "echo ${self.public_ip}"
+
+#   }
+# }
