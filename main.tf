@@ -24,13 +24,13 @@ provider "aws" {
 #   env    = "prd"
 # }
 
-variable "names" {
+variable "envs" {
   type    = list(string)
-  default = ["이거니", "이건휘"]
+  default = ["dev", "prd", ""]
 }
 
 module "personal_custom_vpc" {
-  for_each = toset([for s in var.names : "${s}_test"]) # for_each문 안에 for문을 써서 리소스 for_each의 key값 뒤에 _test를 붙임
+  for_each = toset([for s in var.envs : s if s != ""]) # for_each문 안에 for문을 쓰고 리소스 for_each의 key값을 검증해서 공백이 아닌만큼 반복
   source   = "./custom_vpc"
   env      = "personal_${each.key}"
 }
